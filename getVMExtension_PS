@@ -1,0 +1,42 @@
+#List all VMs with WindowsAgent.AzureSecurityCenter and what not
+$WindowsVMs = get-azVM
+    foreach ($VM in $WindowsVMs) {
+        $extension = Get-AzVMExtension -ResourceGroupName $Vm.ResourceGroupName -VMName $VM.Name
+        if ($extension.Name -contains "WindowsAgent.AzureSecurityCenter") {
+            Write-Host "WindowsAgent.AzureSecurityCenter is Installed in" $VM.Name -ForegroundColor "Cyan"
+            $sucesshash = @{
+                VMName            = $VM.Name
+                Extension         = "WindowsAgent.AzureSecurityCenter"
+                ProvisionedStatus = "Succeeded"
+                Subscription      = $SubName
+            }
+            
+        }
+        else {
+            Write-Host "WindowsAgent.AzureSecurityCenter is Not Installed in" $VM.Name -ForegroundColor "Red"
+            $failhash = @{
+                VMName            = $VM.Name
+                Extension         = "WindowsAgent.AzureSecurityCenter"
+                ProvisionedStatus = "Not Installed"
+                Subscription      = $SubName
+            }
+        
+        }
+    }
+	
+	
+#Only list those with	WindowsAgent.AzureSecurityCenter
+$WindowsVMs = get-azVM
+    foreach ($VM in $WindowsVMs) {
+        $extension = Get-AzVMExtension -ResourceGroupName $Vm.ResourceGroupName -VMName $VM.Name
+        if ($extension.Name -contains "WindowsAgent.AzureSecurityCenter") {
+            Write-Host "WindowsAgent.AzureSecurityCenter is Installed in" $VM.Name -ForegroundColor "Cyan"
+            $sucesshash = @{
+                VMName            = $VM.Name
+                Extension         = "WindowsAgent.AzureSecurityCenter"
+                ProvisionedStatus = "Succeeded"
+                Subscription      = $SubName
+            }
+            
+        }
+	}
