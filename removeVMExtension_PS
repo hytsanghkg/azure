@@ -11,11 +11,7 @@ $WindowsVMs = get-azVM
                 Subscription      = $SubName
             }
 			#Remove WindowsAgent.AzureSecurityCenter from the VM
-			$VM = Remove-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -Name "WindowsAgent.AzureSecurityCenter" -VMName $VM.Name
-			#Perform a check to see if the extension is uninstalled
-			$extension = Get-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -VMName $VM.Name
-			if ($extension.Name -NotContains "WindowsAgent.AzureSecurityCenter") {
-				Write-Host "WindowsAgent.AzureSecurityCenter is Uninstalled in" $VM.Name -ForegroundColor "Green"
-			}
+			$VM = Remove-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -Name "WindowsAgent.AzureSecurityCenter" -VMName $VM.Name -Force
+			#Write-Host "WindowsAgent.AzureSecurityCenter is Uninstalled in" $VM.Name -ForegroundColor "Green"
         }
 	}
