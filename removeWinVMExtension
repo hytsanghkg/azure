@@ -1,0 +1,17 @@
+#Only list those VMs with WindowsAgent.AzureSecurityCenter
+$WindowsVMs = get-azVM
+    foreach ($VM in $WindowsVMs) {
+        $extension = Get-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -VMName $VM.Name
+        if ($extension.Name -contains "WindowsAgent.AzureSecurityCenter") {
+            Write-Host "WindowsAgent.AzureSecurityCenter is Installed in" $VM.Name -ForegroundColor "Cyan"
+            $sucesshash = @{
+                VMName            = $VM.Name
+                Extension         = "WindowsAgent.AzureSecurityCenter"
+                ProvisionedStatus = "Succeeded"
+                Subscription      = $SubName
+            }
+			#Remove WindowsAgent.AzureSecurityCenter from the VM
+			$VM = Remove-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -Name "WindowsAgent.AzureSecurityCenter" -VMName $VM.Name -Force
+			#Write-Host "WindowsAgent.AzureSecurityCenter is Uninstalled" $VM.Name -ForegroundColor "Green"
+        }
+	}
