@@ -1,0 +1,5 @@
+#get extension info about Publisher, ExtensionType, TypeHandlerVersion etc
+Get-AzVMExtension -ResourceGroupName "ESC-PROD-DBSERVERS-RG" -VMName "app-state-db" -Name "QualysAgentLinux"
+
+#run installation of an extension on a specific VM
+Set-AzVMExtension -ResourceGroupName "ResourceGroup11" -VMName "VirtualMachine22" -Name "ContosoTest" -Publisher "Contoso.Compute" -ExtensionType "CustomScriptExtension" -TypeHandlerVersion "1.1"
