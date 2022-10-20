@@ -1,0 +1,17 @@
+#Only list those VMs with LinuxAgent.AzureSecurityCenter
+$LinuxVMs = get-azVM
+    foreach ($VM in $LinuxVMs) {
+        $extension = Get-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -VMName $VM.Name
+        if ($extension.Name -contains "LinuxAgent.AzureSecurityCenter") {
+            Write-Host "LinuxAgent.AzureSecurityCenter is Installed in" $VM.Name -ForegroundColor "Cyan"
+            $sucesshash = @{
+                VMName            = $VM.Name
+                Extension         = "LinuxAgent.AzureSecurityCenter"
+                ProvisionedStatus = "Succeeded"
+                Subscription      = $SubName
+            }
+			#Remove LinuxAgent.AzureSecurityCenter from the VM
+			$VM = Remove-AzVMExtension -ResourceGroupName $VM.ResourceGroupName -Name "LinuxAgent.AzureSecurityCenter" -VMName $VM.Name -Force
+			#Write-Host "WindowsAgent.AzureSecurityCenter is Uninstalled in" $VM.Name -ForegroundColor "Green"
+        }
+	}
