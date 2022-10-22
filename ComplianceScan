@@ -1,0 +1,12 @@
+PCS DSS v4
+
+Non-compliant
+Key Vault (Requirement 10: Log and Monitor All Access to System Components and Cardholder Data (Audit diagnostic setting))
+Fix: go to storage account consumerhelpdesk -> networking -> Enabled from selected virtual networks and IP addresses -> Allow Azure services on the trusted services list to access this storage account.
+
+
+Storage Account (Requirement 01: Install and Maintain Network Security Controls (Storage accounts should restrict network access))
+Fix: go to key vault upl-certs -> diagnostic settings -> edit setting -> check AllMetrics
+
+Pay attention to "Last evaluated" field because compliance scan runs once every day so the change may not be updated immediately
+Run Start-AzPolicyComplianceScan -ResourceGroupName 'Uplevel-webapp' to trigger manual compliance scan
